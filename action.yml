@@ -22,14 +22,20 @@ runs:
     - run: |
         rubocop_todo_corrector bundle
         rubocop_todo_corrector generate
-        git status
-        cop_name="$(rubocop_todo_corrector pick)"
+        cop_name=$(rubocop_todo_corrector pick)
         rubocop_todo_corrector remove --cop-name="${cop_name}"
         rubocop_todo_corrector correct
         rubocop_todo_corrector generate
         git status
-        rubocop_todo_corrector describe --cop-name="${cop_name}"
+        git config user.name "${GITHUB_ACTOR}"
+        git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+        git add .
+        git commit --message="Auto-correct ${cop_name}"
+        rubocop_todo_corrector describe --cop-name="${cop_name}" \
+          | gh pr create --title "Auto-correct ${cop_name}" --body-file -
       shell: bash
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 branding:
   color: red
   icon: git-pull-request
