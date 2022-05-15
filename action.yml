@@ -1,0 +1,23 @@
+name: rubocop-todo-corrector
+description: Auto-correct RuboCop ToDo offenses and create Pull Request.
+inputs:
+  base_branch:
+    description: Pull request base branch.
+    required: false
+    default: main
+  mode:
+    description: Mode to select deletion target.
+    required: false
+    default: random
+runs:
+  using: composite
+  steps:
+    - uses: ruby/setup-ruby@v1
+      with:
+        bundler-cache: true
+        ruby-version: 3.1
+    - run: gem install rubocop_todo_corrector:0.1.0
+    - uses: actions/checkout@v3
+branding:
+  color: red
+  icon: git-pull-request
