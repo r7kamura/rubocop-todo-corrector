@@ -29,10 +29,11 @@ runs:
         git status
         git config user.name "${GITHUB_ACTOR}"
         git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-        git switch --create "rubocop-todo-corrector-${GITHUB_RUN_ID}"
+        branch_name="rubocop-todo-corrector-${GITHUB_RUN_ID}"
+        git switch --create "${branch_name}"
         git add .
         git commit --message="Auto-correct ${cop_name}"
-        git push --set-upstream
+        git push --set-upstream origin "${branch_name}"
         rubocop_todo_corrector describe --cop-name="${cop_name}" \
           | gh pr create --title "Auto-correct ${cop_name}" --body-file -
       shell: bash
