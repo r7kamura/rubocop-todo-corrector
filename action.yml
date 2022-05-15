@@ -16,8 +16,17 @@ runs:
       with:
         bundler-cache: true
         ruby-version: 3.1
-    - run: gem install rubocop_todo_corrector:0.1.0
+    - run: gem install --no-document rubocop_todo_corrector:0.1.0
     - uses: actions/checkout@v3
+    - run: |
+      rubocop_todo_corrector bundle
+      rubocop_todo_corrector generate
+      git status
+      cop_name=$(rubocop_todo_corrector pick)
+      rubocop_todo_corrector remove --cop-name="${cop_name}"
+      rubocop_todo_corrector generate
+      git status
+      rubocop_todo_corrector describe --cop-name="${cop_name}"
 branding:
   color: red
   icon: git-pull-request
