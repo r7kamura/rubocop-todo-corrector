@@ -3,6 +3,12 @@
 [Custom action](https://docs.github.com/en//actions/creating-actions/about-custom-actions)
 to auto-correct [RuboCop](https://github.com/rubocop/rubocop) ToDo offenses and create pull request.
 
+## How it works?
+
+![](images/workflow.png)
+
+![](images/pull-request.png)
+
 ## Usage
 
 An example workflow to run rubocop-todo-corrector via
