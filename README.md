@@ -44,6 +44,6 @@ gh workflow run rubocop-todo-corrector
 - Choose from the following options:
   - `"first"`
   - `"last"`
-  - `"least_occured"`
-  - `"most_occured"`
+  - `"least_occurred"`
+  - `"most_occurred"`
   - `"random"`
