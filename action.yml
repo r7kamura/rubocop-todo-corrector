@@ -35,7 +35,7 @@ runs:
           | gh pr create --title "Auto-correct ${cop_name}" --body-file -
       shell: bash
       env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ github.token }}
 branding:
   color: red
   icon: git-pull-request
