@@ -32,6 +32,7 @@ runs:
         git switch --create "rubocop-todo-corrector-${GITHUB_RUN_ID}"
         git add .
         git commit --message="Auto-correct ${cop_name}"
+        git push --set-upstream
         rubocop_todo_corrector describe --cop-name="${cop_name}" \
           | gh pr create --title "Auto-correct ${cop_name}" --body-file -
       shell: bash
