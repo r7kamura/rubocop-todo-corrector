@@ -37,6 +37,11 @@ gh workflow run rubocop-todo-corrector
 
 ## Inputs
 
+### `label`
+
+- Pull request label name.
+- default: `""` (empty string means no-label)
+
 ### `mode`
 
 - Mode to select deletion target.

@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Added
+
+- Add `label` option.
+
 ## 0.2.0 - 2022-05-16
 
 ### Changed

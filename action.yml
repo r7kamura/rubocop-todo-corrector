@@ -1,6 +1,10 @@
 name: rubocop-todo-corrector
 description: Auto-correct RuboCop ToDo offenses and create pull request.
 inputs:
+  label:
+    description: Pull request label name.
+    required: false
+    default: ""
   mode:
     description: Mode to select deletion target.
     required: false
@@ -29,7 +33,7 @@ runs:
         git add .
         rubocop_todo_corrector describe --cop-name="${cop_name}" | git commit --file=-
         git push --set-upstream origin "${branch_name}"
-        gh pr create --fill
+        gh pr create --fill --label="${{ inputs.label }}"
       shell: bash
       env:
         GITHUB_TOKEN: ${{ github.token }}
