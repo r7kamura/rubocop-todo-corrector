@@ -12,7 +12,7 @@ runs:
       with:
         bundler-cache: true
         ruby-version: 3.1
-    - run: gem install --no-document rubocop_todo_corrector:0.2.0
+    - run: gem install --no-document rubocop_todo_corrector:0.3.0
       shell: bash
     - uses: actions/checkout@v3
     - run: |
@@ -27,10 +27,9 @@ runs:
         branch_name="rubocop-todo-corrector-${GITHUB_RUN_ID}"
         git switch --create "${branch_name}"
         git add .
-        git commit --message="Auto-correct ${cop_name}"
+        rubocop_todo_corrector describe --cop-name="${cop_name}" | git commit --file=-
         git push --set-upstream origin "${branch_name}"
-        rubocop_todo_corrector describe --cop-name="${cop_name}" \
-          | gh pr create --title "Auto-correct ${cop_name}" --body-file -
+        gh pr create --fill
       shell: bash
       env:
         GITHUB_TOKEN: ${{ github.token }}
