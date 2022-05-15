@@ -18,7 +18,7 @@ runs:
     - run: |
         rubocop_todo_corrector bundle
         rubocop_todo_corrector generate
-        cop_name=$(rubocop_todo_corrector pick)
+        cop_name=$(rubocop_todo_corrector pick --mode="${{ inputs.mode }}")
         rubocop_todo_corrector remove --cop-name="${cop_name}"
         rubocop_todo_corrector correct
         rubocop_todo_corrector generate
