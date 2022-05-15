@@ -16,7 +16,7 @@ runs:
       with:
         bundler-cache: true
         ruby-version: 3.1
-    - run: gem install --no-document rubocop_todo_corrector:0.1.1
+    - run: gem install --no-document rubocop_todo_corrector:0.2.0
       shell: bash
     - uses: actions/checkout@v3
     - run: |
@@ -25,6 +25,7 @@ runs:
         git status
         cop_name="$(rubocop_todo_corrector pick)"
         rubocop_todo_corrector remove --cop-name="${cop_name}"
+        rubocop_todo_corrector correct
         rubocop_todo_corrector generate
         git status
         rubocop_todo_corrector describe --cop-name="${cop_name}"
