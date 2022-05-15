@@ -1,10 +1,6 @@
 name: rubocop-todo-corrector
 description: Auto-correct RuboCop ToDo offenses and create pull request.
 inputs:
-  base_branch:
-    description: Pull request base branch.
-    required: false
-    default: main
   mode:
     description: Mode to select deletion target.
     required: false

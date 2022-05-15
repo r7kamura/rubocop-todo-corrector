@@ -31,11 +31,6 @@ gh workflow run rubocop-todo-corrector
 
 ## Inputs
 
-### `base_branch`
-
-- Pull request base branch.
-- default: `"main"`
-
 ### `mode`
 
 - Mode to select deletion target.
