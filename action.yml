@@ -22,7 +22,6 @@ runs:
         rubocop_todo_corrector remove --cop-name="${cop_name}"
         rubocop_todo_corrector correct
         rubocop_todo_corrector generate
-        git status
         git config user.name "${GITHUB_ACTOR}"
         git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
         branch_name="rubocop-todo-corrector-${GITHUB_RUN_ID}"
