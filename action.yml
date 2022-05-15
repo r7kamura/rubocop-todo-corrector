@@ -24,7 +24,6 @@ runs:
         rubocop_todo_corrector generate
         git status
         cop_name="$(rubocop_todo_corrector pick)"
-        echo "${cop_name}"
         rubocop_todo_corrector remove --cop-name="${cop_name}"
         rubocop_todo_corrector generate
         git status
