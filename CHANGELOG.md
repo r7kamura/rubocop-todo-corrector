@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.3.0 - 2022-05-16
+
 ### Added
 
 - Add `label` option.
