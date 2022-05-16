@@ -19,21 +19,36 @@ runs:
     - run: gem install --no-document rubocop_todo_corrector:0.6.0
       shell: bash
     - uses: actions/checkout@v3
-    - run: |
-        rubocop_todo_corrector bundle
-        rubocop_todo_corrector generate
+    - name: rubocop_todo_corrector bundle
+      run: rubocop_todo_corrector bundle
+      shell: bash
+    - name: rubocop_todo_corrector pick
+      id: pick
+      run: |
         cop_name=$(rubocop_todo_corrector pick --mode="${{ inputs.mode }}")
-        rubocop_todo_corrector remove --cop-name="${cop_name}"
-        rubocop_todo_corrector correct
-        rubocop_todo_corrector generate
+        echo "::set-output name=cop_name::${cop_name}"
+      shell: bash
+    - name: rubocop_todo_corrector remove
+      run: rubocop_todo_corrector remove --cop-name="${{ steps.pick.outputs.cop_name }}"
+      shell: bash
+    - name: rubocop_todo_corrector correct
+      run: rubocop_todo_corrector correct
+      shell: bash
+    - name: rubocop_todo_corrector generate
+      run: rubocop_todo_corrector generate
+      shell: bash
+    - name: git push
+      run: |
         git config user.name "${GITHUB_ACTOR}"
         git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
         branch_name="rubocop-todo-corrector-${GITHUB_RUN_ID}"
         git switch --create "${branch_name}"
         git add .
-        rubocop_todo_corrector describe --cop-name="${cop_name}" | git commit --file=-
+        rubocop_todo_corrector describe --cop-name="${{ steps.pick.outputs.cop_name }}" | git commit --file=-
         git push --set-upstream origin "${branch_name}"
-        gh pr create --fill --label="${{ inputs.label }}"
+      shell: bash
+    - name: gh pr create
+      run: gh pr create --fill --label="${{ inputs.label }}"
       shell: bash
       env:
         GITHUB_TOKEN: ${{ github.token }}
