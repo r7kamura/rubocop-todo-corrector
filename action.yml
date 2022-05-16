@@ -9,6 +9,10 @@ inputs:
     description: Mode to select deletion target.
     required: false
     default: random
+  only_safe:
+    description: Exclude unsafe cops.
+    required: false
+    default: true
 runs:
   using: composite
   steps:
@@ -25,14 +29,14 @@ runs:
     - name: rubocop_todo_corrector pick
       id: pick
       run: |
-        cop_name=$(rubocop_todo_corrector pick --mode="${{ inputs.mode }}")
+        cop_name=$(rubocop_todo_corrector pick --mode="${{ inputs.mode }}" ${{ inputs.only_safe && '--only-safe' || '' }})
         echo "::set-output name=cop_name::${cop_name}"
       shell: bash
     - name: rubocop_todo_corrector remove
       run: rubocop_todo_corrector remove --cop-name="${{ steps.pick.outputs.cop_name }}"
       shell: bash
     - name: rubocop_todo_corrector correct
-      run: rubocop_todo_corrector correct
+      run: rubocop_todo_corrector correct ${{ inputs.only_safe && '--only-safe' || '' }}
       shell: bash
     - name: rubocop_todo_corrector generate
       run: rubocop_todo_corrector generate

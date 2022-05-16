@@ -52,3 +52,8 @@ gh workflow run rubocop-todo-corrector
   - `"least_occurred"`
   - `"most_occurred"`
   - `"random"`
+
+### `label`
+
+- Exclude unsafe cops.
+- default: `true`
