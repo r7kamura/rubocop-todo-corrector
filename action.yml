@@ -16,7 +16,7 @@ runs:
       with:
         bundler-cache: true
         ruby-version: 3.1
-    - run: gem install --no-document rubocop_todo_corrector:0.4.0
+    - run: gem install --no-document rubocop_todo_corrector:0.5.0
       shell: bash
     - uses: actions/checkout@v3
     - run: |
