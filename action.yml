@@ -1,6 +1,9 @@
 name: rubocop-todo-corrector
 description: Auto-correct RuboCop ToDo offenses and create pull request.
 inputs:
+  github_token:
+    description: GitHub access token to run another workflows from new pull request.
+    required: false
   label:
     description: Pull request label name.
     required: false
@@ -55,7 +58,7 @@ runs:
       run: gh pr create --fill --label="${{ inputs.label }}"
       shell: bash
       env:
-        GITHUB_TOKEN: ${{ github.token }}
+        GITHUB_TOKEN: ${{ inputs.github_token || github.token }}
 branding:
   color: red
   icon: git-pull-request

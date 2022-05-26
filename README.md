@@ -37,6 +37,12 @@ gh workflow run rubocop-todo-corrector
 
 ## Inputs
 
+### `github_token`
+
+- GitHub access token to run another workflows from new pull request.
+    - Don't forget to add `workflow` scope to this token
+- optional
+
 ### `label`
 
 - Pull request label name.

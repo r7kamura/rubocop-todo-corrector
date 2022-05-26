@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Added
+
+- Add inputs.github_token.
+
 ## 0.7.0 - 2022-05-27
 
 ### Changed
