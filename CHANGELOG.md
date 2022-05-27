@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.8.0 - 2022-05-27
+
 ### Added
 
 - Add inputs.github_token.
