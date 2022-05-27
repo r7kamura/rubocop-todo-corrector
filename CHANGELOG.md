@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Changed
+
+- Change rubocop_todo_corrector version from 0.7.0 to 0.7.1.
+
 ## 0.8.0 - 2022-05-27
 
 ### Added
