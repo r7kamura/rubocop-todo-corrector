@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.8.2 - 2022-05-30
+
 ### Fixed
 
 - Fix bug about `only_safe` input option.
