@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Fixed
+
+- Fix bug about `only_safe` input option.
+
 ## 0.8.1 - 2022-05-28
 
 ### Changed
