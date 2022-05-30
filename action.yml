@@ -32,14 +32,14 @@ runs:
     - name: rubocop_todo_corrector pick
       id: pick
       run: |
-        cop_name=$(rubocop_todo_corrector pick --mode="${{ inputs.mode }}" ${{ inputs.only_safe && '--only-safe' || '' }})
+        cop_name=$(rubocop_todo_corrector pick --mode="${{ inputs.mode }}" ${{ inputs.only_safe == 'true' && '--only-safe' || '' }})
         echo "::set-output name=cop_name::${cop_name}"
       shell: bash
     - name: rubocop_todo_corrector remove
       run: rubocop_todo_corrector remove --cop-name="${{ steps.pick.outputs.cop_name }}"
       shell: bash
     - name: rubocop_todo_corrector correct
-      run: rubocop_todo_corrector correct ${{ inputs.only_safe && '--only-safe' || '' }}
+      run: rubocop_todo_corrector correct ${{ inputs.only_safe == 'true' && '--only-safe' || '' }}
       shell: bash
     - name: rubocop_todo_corrector generate
       run: rubocop_todo_corrector generate
