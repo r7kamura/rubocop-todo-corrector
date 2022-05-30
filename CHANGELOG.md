@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## Fixed
+
+- Fix bug about `only_safe` argument.
+
 ## 0.8.2 - 2022-05-30
 
 ### Fixed
