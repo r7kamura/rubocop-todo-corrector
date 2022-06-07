@@ -37,6 +37,12 @@ gh workflow run rubocop-todo-corrector
 
 ## Inputs
 
+### `cop_name`
+
+- Pass cop name if you want to pick a specific cop.
+- optional
+- e.g. `Style/NegatedIf`
+
 ### `github_token`
 
 - GitHub access token to run another workflows from new pull request.
