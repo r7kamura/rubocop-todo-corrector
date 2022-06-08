@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+### 0.9.0 - 2022-06-08
+
 ### Added
 
 - Add `cop_name` input option.
