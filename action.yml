@@ -1,6 +1,10 @@
 name: rubocop-todo-corrector
 description: Auto-correct RuboCop ToDo offenses and create pull request.
 inputs:
+  cop_name:
+    description: Pass cop name if you want to pick a specific cop.
+    required: false
+    default: ""
   github_token:
     description: GitHub access token to run another workflows from new pull request.
     required: false
@@ -32,7 +36,11 @@ runs:
     - name: rubocop_todo_corrector pick
       id: pick
       run: |
-        cop_name=$(rubocop_todo_corrector pick --mode="${{ inputs.mode }}" ${{ inputs.only_safe != 'true' && '--no-only-safe' || '' }})
+        if [ -n "${{ inputs.cop_name }}" ]; then
+          cop_name="${{ inputs.cop_name }}"
+        else
+          cop_name=$(rubocop_todo_corrector pick --mode="${{ inputs.mode }}" ${{ inputs.only_safe != 'true' && '--no-only-safe' || '' }})
+        fi
         echo "::set-output name=cop_name::${cop_name}"
       shell: bash
     - name: rubocop_todo_corrector remove
