@@ -27,7 +27,7 @@ runs:
       with:
         bundler-cache: true
         ruby-version: 3.1
-    - run: gem install --no-document rubocop_todo_corrector:0.7.1
+    - run: gem install --no-document rubocop_todo_corrector:0.8.0
       shell: bash
     - uses: actions/checkout@v3
     - name: rubocop_todo_corrector bundle
@@ -54,12 +54,14 @@ runs:
       shell: bash
     - name: git push
       run: |
+        description=$(rubocop_todo_corrector describe --cop-name="${{ steps.pick.outputs.cop_name }}")
+        rubocop_todo_corrector clean
         git config user.name "${GITHUB_ACTOR}"
         git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
         branch_name="rubocop-todo-corrector-${GITHUB_RUN_ID}"
         git switch --create "${branch_name}"
         git add .
-        rubocop_todo_corrector describe --cop-name="${{ steps.pick.outputs.cop_name }}" | git commit --file=-
+        git commit --message "${description}"
         git push --set-upstream origin "${branch_name}"
       shell: bash
     - name: gh pr create
