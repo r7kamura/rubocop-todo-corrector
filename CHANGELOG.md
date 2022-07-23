@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Fixed
+
+- Exclude temporary files from genrated pull requests.
+
 ### 0.9.0 - 2022-06-08
 
 ### Added
