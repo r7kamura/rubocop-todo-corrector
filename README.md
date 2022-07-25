@@ -82,9 +82,9 @@ Don't forget to create the label on your repository before you run the action.
 
 ### `github_token`
 
-- GitHub access token to run another workflows from new pull request.
-    - Don't forget to add `workflow` scope to this token
+- GitHub access token for GitHub API calls.
 - optional
+    - Not required, but if you want to run another workflows from new pull request, you need to pass this token with `workflow` scope.
 
 ### `label`
 
