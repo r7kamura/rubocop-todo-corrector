@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.10.0 - 2022-07-26
+
 ### Added
 
 - Add pull request closed event support for continuous autocorrection.
