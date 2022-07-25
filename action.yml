@@ -27,34 +27,41 @@ runs:
       with:
         bundler-cache: true
         ruby-version: 3.1
-    - run: gem install --no-document rubocop_todo_corrector:0.8.0
-      shell: bash
     - uses: actions/checkout@v3
-    - name: rubocop_todo_corrector bundle
-      run: rubocop_todo_corrector bundle
-      shell: bash
-    - name: rubocop_todo_corrector pick
-      id: pick
+      with:
+        # We want to always get the default branch ref.
+        ref: "${{ github.event.pull_request.base.ref }}"
+    - name: Create pull request
       run: |
+        if [ "${{ github.event_name }}" == "pull_request" ] && [ "${{ github.event.action }}" == "closed" ]; then
+          if [ -z "${{ inputs.label }}"]; then
+            echo "You need to set `label` input to use this feature."
+            exit 1
+          fi
+
+          if [ "${{ contains(github.event.pull_request.labels.*.name, inputs.label) }}" != "true" ]; then
+            echo "This pull request is unrelated because it's not labeled with `${{ inputs.label }}` label."
+            exit 0
+          fi
+
+          open_pull_requests_count=$(gh pr list --label "${{ inputs.label }}" --json number --jq length)
+          if [ "$open_pull_requests_count" -gt 0 ]; then
+            echo "Other open labeled pull requests are still existing, so we don't create a new one."
+            exit 0
+          fi
+        fi
+
+        gem install --no-document rubocop_todo_corrector:0.8.0
+        rubocop_todo_corrector bundle
         if [ -n "${{ inputs.cop_name }}" ]; then
           cop_name="${{ inputs.cop_name }}"
         else
           cop_name=$(rubocop_todo_corrector pick --mode="${{ inputs.mode }}" ${{ inputs.only_safe != 'true' && '--no-only-safe' || '' }})
         fi
-        echo "::set-output name=cop_name::${cop_name}"
-      shell: bash
-    - name: rubocop_todo_corrector remove
-      run: rubocop_todo_corrector remove --cop-name="${{ steps.pick.outputs.cop_name }}"
-      shell: bash
-    - name: rubocop_todo_corrector correct
-      run: rubocop_todo_corrector correct ${{ inputs.only_safe != 'true' && '--no-only-safe' || '' }}
-      shell: bash
-    - name: rubocop_todo_corrector generate
-      run: rubocop_todo_corrector generate
-      shell: bash
-    - name: git push
-      run: |
-        description=$(rubocop_todo_corrector describe --cop-name="${{ steps.pick.outputs.cop_name }}")
+        rubocop_todo_corrector remove --cop-name="${cop_name}"
+        rubocop_todo_corrector correct ${{ inputs.only_safe != 'true' && '--no-only-safe' || '' }}
+        rubocop_todo_corrector generate
+        description=$(rubocop_todo_corrector describe --cop-name="${cop_name}")
         rubocop_todo_corrector clean
         git config user.name "${GITHUB_ACTOR}"
         git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
@@ -63,12 +70,10 @@ runs:
         git add .
         git commit --message "${description}"
         git push --set-upstream origin "${branch_name}"
-      shell: bash
-    - name: gh pr create
-      run: gh pr create --fill --label="${{ inputs.label }}"
-      shell: bash
+        gh pr create --fill --label="${{ inputs.label }}"
       env:
         GITHUB_TOKEN: ${{ inputs.github_token || github.token }}
+      shell: bash
 branding:
   color: red
   icon: git-pull-request
