@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.10.1 - 2022-07-26
+
 ### Fixed
 
 - Fix bug: avoid backtick in double quotes in shell-script.
