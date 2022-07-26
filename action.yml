@@ -35,12 +35,12 @@ runs:
       run: |
         if [ "${{ github.event_name }}" == "pull_request" ] && [ "${{ github.event.action }}" == "closed" ]; then
           if [ -z "${{ inputs.label }}"]; then
-            echo "You need to set `label` input to use this feature."
+            echo "You need to set label input to use this feature."
             exit 1
           fi
 
           if [ "${{ contains(github.event.pull_request.labels.*.name, inputs.label) }}" != "true" ]; then
-            echo "This pull request is unrelated because it's not labeled with `${{ inputs.label }}` label."
+            echo "This pull request is unrelated because it's not labeled with ${{ inputs.label }} label."
             exit 0
           fi
 
