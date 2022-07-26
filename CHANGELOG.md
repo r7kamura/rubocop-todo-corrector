@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Fixed
+
+- Fix bug: avoid backtick in double quotes in shell-script.
+
 ## 0.10.0 - 2022-07-26
 
 ### Added
