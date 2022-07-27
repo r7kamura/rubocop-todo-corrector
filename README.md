@@ -67,6 +67,12 @@ Don't forget to create the label on your repository before you run the action.
 
 If you pass `ignore` as `"true"`, the action will create a pull request that ignores the specified cop by appending specified `cop_name` to `.rubocop_todo_corrector_ignore`.
 
+Note: You can ignore specific cops by adding a file named `.rubocop_todo_corrector_ignore` to your repository.
+
+See the following page for more details:
+
+- https://github.com/r7kamura/rubocop_todo_corrector#rubocop_todo_corrector_ignore
+
 ## Inputs
 
 ### `cop_name`
@@ -110,11 +116,3 @@ If you pass `ignore` as `"true"`, the action will create a pull request that ign
 
 - Exclude unsafe cops.
 - default: `"true"`
-
-## .rubocop_todo_corrector_ignore
-
-You can ignore specific cops by adding a file named `.rubocop_todo_corrector_ignore` to your repository.
-
-See the following page for more details:
-
-- https://github.com/r7kamura/rubocop_todo_corrector#rubocop_todo_corrector_ignore
