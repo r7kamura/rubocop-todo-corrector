@@ -19,11 +19,17 @@ on:
         description: Pass cop name if you want to pick a specific cop.
         required: false
         type: string
+      ignore:
+        description: Check this with cop_name if you want to ignore a specific cop.
+        required: false
+        type: boolean
 jobs:
   run:
     runs-on: ubuntu-latest
     steps:
       - uses: r7kamura/rubocop-todo-corrector@v0
+        with:
+          ignore: ${{ inputs.ignore }}
 ```
 
 Now you can run it via actions page:
@@ -46,31 +52,20 @@ By adding `on.pull_request` to the workflow, you can automatically run it when a
 
 ```yaml
 # .github/workflows/rubocop-todo-corrector.yml
-name: rubocop-todo-corrector
-
 on:
   pull_request:
     types:
       - closed
   workflow_dispatch:
-    inputs:
-      cop_name:
-        description: Pass cop name if you want to pick a specific cop.
-        required: false
-        type: string
-
-jobs:
-  run:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: r7kamura/rubocop-todo-corrector@feature/infinity
-        with:
-          cop_name: ${{ github.event.inputs.cop_name }}
-          label: rubocop-todo-corrector
+    # ...
 ```
 
 Note that the `label` input is required to use this feature.
 Don't forget to create the label on your repository before you run the action.
+
+### Ignore
+
+If you pass `ignore` as `"true"`, the action will create a pull request that ignores the specified cop by appending specified `cop_name` to `.rubocop_todo_corrector_ignore`.
 
 ## Inputs
 
@@ -78,7 +73,8 @@ Don't forget to create the label on your repository before you run the action.
 
 - Pass cop name if you want to pick a specific cop.
 - optional
-- e.g. `Style/NegatedIf`
+    - Required if `ignore` is `"true"`
+- e.g. `"Style/NegatedIf"`
 
 ### `github_token`
 
@@ -86,11 +82,17 @@ Don't forget to create the label on your repository before you run the action.
 - optional
     - Not required, but if you want to run another workflows from new pull request, you need to pass this token with `workflow` scope.
 
+### `ignore`
+
+- Ignore specific cop instead.
+- optional
+- e.g. `"true"`
+
 ### `label`
 
 - Pull request label name.
 - optional
-- e.g. `rubocop-todo-corrector`
+- e.g. `"rubocop-todo-corrector"`
 - Note: You need to create a label with this name on your repository.
 
 ### `mode`
@@ -107,7 +109,7 @@ Don't forget to create the label on your repository before you run the action.
 ### `only_safe`
 
 - Exclude unsafe cops.
-- default: `true`
+- default: `"true"`
 
 ## .rubocop_todo_corrector_ignore
 

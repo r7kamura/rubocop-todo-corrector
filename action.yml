@@ -8,6 +8,10 @@ inputs:
   github_token:
     description: GitHub access token to run another workflows from new pull request.
     required: false
+  ignore:
+    description: Ignore specific cop instead. ("cop_name" is required in this case)
+    required: false
+    default: "false"
   label:
     description: Pull request label name.
     required: false
@@ -51,18 +55,29 @@ runs:
           fi
         fi
 
-        gem install --no-document rubocop_todo_corrector:0.9.0
-        rubocop_todo_corrector bundle
-        if [ -n "${{ inputs.cop_name }}" ]; then
-          cop_name="${{ inputs.cop_name }}"
+        gem install --no-document rubocop_todo_corrector:0.10.0
+
+        if [ "${{ inputs.ignore }}" == "true" ]; then
+          if [ -z "${{ inputs.cop_name }}" ]; then
+            echo "You need to set cop_name input to use this feature."
+            exit 1
+          fi
+          rubocop_todo_corrector ignore --cop-name "${{ inputs.cop_name }}"
+          description="Ignore ${{ inputs.cop_name }} from rubocop-todo-corrector"
         else
-          cop_name=$(rubocop_todo_corrector pick --mode="${{ inputs.mode }}" ${{ inputs.only_safe != 'true' && '--no-only-safe' || '' }})
+          rubocop_todo_corrector bundle
+          if [ -n "${{ inputs.cop_name }}" ]; then
+            cop_name="${{ inputs.cop_name }}"
+          else
+            cop_name=$(rubocop_todo_corrector pick --mode="${{ inputs.mode }}" ${{ inputs.only_safe != 'true' && '--no-only-safe' || '' }})
+          fi
+          rubocop_todo_corrector remove --cop-name="${cop_name}"
+          rubocop_todo_corrector correct ${{ inputs.only_safe != 'true' && '--no-only-safe' || '' }}
+          rubocop_todo_corrector generate
+          description=$(rubocop_todo_corrector describe --cop-name="${cop_name}")
+          rubocop_todo_corrector clean
         fi
-        rubocop_todo_corrector remove --cop-name="${cop_name}"
-        rubocop_todo_corrector correct ${{ inputs.only_safe != 'true' && '--no-only-safe' || '' }}
-        rubocop_todo_corrector generate
-        description=$(rubocop_todo_corrector describe --cop-name="${cop_name}")
-        rubocop_todo_corrector clean
+
         git config user.name "${GITHUB_ACTOR}"
         git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
         branch_name="rubocop-todo-corrector-${GITHUB_RUN_ID}"
