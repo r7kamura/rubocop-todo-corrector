@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.13.0 - 2022-07-27
+
 ### Added
 
 - Add `gh_pr_create_options` input option.
