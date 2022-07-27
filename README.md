@@ -80,6 +80,12 @@ Note: You can ignore specific cops by adding a file named `.rubocop_todo_correct
     - Required if `ignore` is `"true"`
 - e.g. `"Style/NegatedIf"`
 
+### `gh_pr_create_options`
+
+- Additional options for `gh pr create` command.
+- optional
+- e.g. `"--reviewer r7kamura --draft"`
+
 ### `github_token`
 
 - GitHub access token for GitHub API calls.
