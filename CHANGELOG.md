@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Added
+
+- Change rubocop_todo_corrector version from 0.9.0 to 0.10.0.
+- Add `ignore` input option.
+
 ## 0.11.0 - 2022-07-27
 
 ### Changed
