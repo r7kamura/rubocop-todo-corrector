@@ -5,6 +5,10 @@ inputs:
     description: Pass cop name if you want to pick a specific cop.
     required: false
     default: ""
+  gh_pr_create_options:
+    desecription: Additional options for `gh pr create` command.
+    required: false
+    default: ""
   github_token:
     description: GitHub access token to run another workflows from new pull request.
     required: false
@@ -85,7 +89,7 @@ runs:
         git add .
         git commit --message "${description}"
         git push --set-upstream origin "${branch_name}"
-        gh pr create --fill --label="${{ inputs.label }}"
+        gh pr create --fill --label="${{ inputs.label }}" ${{ inputs.gh_pr_create_options }}
       env:
         GITHUB_TOKEN: ${{ inputs.github_token || github.token }}
       shell: bash
