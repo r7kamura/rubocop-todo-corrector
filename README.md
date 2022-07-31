@@ -4,8 +4,6 @@
 
 ## Usage
 
-### Manual running
-
 Add the following workflow file to manually run the action:
 
 ```yaml
@@ -46,24 +44,44 @@ After the action is complete, a pull request is created as follows:
 
 ![](images/pull-request.png)
 
-### Automatic running
+## Automatic running
 
-By adding `on.pull_request` to the workflow, you can automatically run it when all other labeled pull requests are merged or closed.
+By adding `on.pull_request` event to the workflow, you can automatically run it when all other labeled pull requests are merged or closed.
 
-```yaml
-# .github/workflows/rubocop-todo-corrector.yml
-on:
-  pull_request:
-    types:
-      - closed
-  workflow_dispatch:
-    # ...
+```diff
+ name: rubocop-todo-corrector
+
+ on:
++  pull_request:
++     types:
++       - closed
+   workflow_dispatch:
+     inputs:
+       cop_name:
+         description: Pass cop name if you want to pick a specific cop.
+         required: false
+         type: string
+       ignore:
+         description: Check this with cop_name if you want to ignore a specific cop.
+         required: false
+         type: boolean
+ jobs:
+   run:
+     runs-on: ubuntu-latest
+     steps:
+       - uses: r7kamura/rubocop-todo-corrector@v0
+         with:
+           ignore: ${{ inputs.ignore }}
++          label: rubocop-todo-corrector
 ```
 
 Note that the `label` input is required to use this feature.
-Don't forget to create the label on your repository before you run the action.
 
-### Ignore
+**Don't forget to create the label** on your repository before you run the action.
+
+![label](images/label.png)
+
+## Ignore cops
 
 If you pass `ignore` as `"true"`, the action will create a pull request that ignores the specified cop by appending specified `cop_name` to `.rubocop_todo_corrector_ignore`.
 
