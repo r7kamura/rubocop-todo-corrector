@@ -27,7 +27,7 @@ inputs:
   only_safe:
     description: Exclude unsafe cops.
     required: false
-    default: 'true'
+    default: "true"
 runs:
   using: composite
   steps:
