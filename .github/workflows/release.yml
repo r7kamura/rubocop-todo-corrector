@@ -8,6 +8,4 @@ on:
 
 jobs:
   release:
-    uses: r7kamura/workflows/.github/workflows/github-release.yml@main
-    secrets:
-      github-token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+    uses: r7kamura/workflows/.github/workflows/release-action.yml@main
