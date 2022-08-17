@@ -42,7 +42,7 @@ runs:
     - name: Create pull request
       run: |
         if [ "${{ github.event_name }}" == "pull_request" ] && [ "${{ github.event.action }}" == "closed" ]; then
-          if [ -z "${{ inputs.label }}"]; then
+          if [ -z "${{ inputs.label }}" ]; then
             echo "You need to set label input to use this feature."
             exit 1
           fi
