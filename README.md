@@ -108,7 +108,21 @@ Note: You can ignore specific cops by adding a file named `.rubocop_todo_correct
 
 - GitHub access token for GitHub API calls.
 - optional
-    - Not required, but if you want to run another workflows from new pull request, you need to pass this token with `workflow` scope.
+
+It uses the default GitHub access token, so it usually works well as is without any additional configuration. However, there is a known issue that the default access token does not have `workflow` scope, so the pull request created by this action cannot run other GitHub Actions workflows. In that case, pass a custom access token with this option:
+
+If a personal access token is used, the permission would look like this:
+
+- repo
+- workflow
+
+If you use GitHub App to generate access tokens, the permission would look like this:
+
+- Actions: Read/Write
+- Contents: Read/Write
+- Issues: Read (necessary for [GitHub API permission bug](https://github.com/cli/cli/issues/5986))
+- Members: Read (optional for reviewer assignment)
+- Pull Requests: Read/Write
 
 ### `ignore`
 
