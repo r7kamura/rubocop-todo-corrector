@@ -1,6 +1,10 @@
 name: rubocop-todo-corrector
 description: Auto-correct RuboCop ToDo offenses and create pull request.
 inputs:
+  auto_merge:
+    descriotion: Pass `"true"` if you want it to run `gh pr merge --auto --merge` after creating a pull request.
+    required: false
+    default: "false"
   cop_name:
     description: Pass cop name if you want to pick a specific cop.
     required: false
@@ -90,6 +94,10 @@ runs:
         git commit --message "${description}"
         git push --set-upstream origin "${branch_name}"
         gh pr create --fill --label="${{ inputs.label }}" ${{ inputs.gh_pr_create_options }}
+
+        if [ "${{ inputs.auto_merge }}" == "true" ]; then
+          gh pr merge --auto --merge
+        fi
       env:
         GITHUB_TOKEN: ${{ inputs.github_token || github.token }}
       shell: bash

@@ -91,6 +91,11 @@ Note: You can ignore specific cops by adding a file named `.rubocop_todo_correct
 
 ## Inputs
 
+### `auto_merge`
+
+- Pass `"true"` if you want it to run `gh pr merge --auto --merge` after creating a pull request.
+- optional
+
 ### `cop_name`
 
 - Pass cop name if you want to pick a specific cop.
@@ -126,9 +131,8 @@ If you use GitHub App to generate access tokens, the permission would look like 
 
 ### `ignore`
 
-- Ignore specific cop instead.
+- Pass `"true"` if you want to create a pull request to ignore a specific cop instead.
 - optional
-- e.g. `"true"`
 
 ### `label`
 
@@ -140,7 +144,7 @@ If you use GitHub App to generate access tokens, the permission would look like 
 ### `mode`
 
 - Mode to select autocorrected cop.
-- default: `random`
+- default: `"random"`
 - Choose from the following options:
   - `"first"`
   - `"last"`
@@ -150,5 +154,5 @@ If you use GitHub App to generate access tokens, the permission would look like 
 
 ### `only_safe`
 
-- Exclude unsafe cops.
-- default: `"true"`
+- Pass `"false"` if you want it to include unsafe autocorrection.
+- optional
