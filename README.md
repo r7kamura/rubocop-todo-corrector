@@ -12,22 +12,12 @@ name: rubocop-todo-corrector
 
 on:
   workflow_dispatch:
-    inputs:
-      cop_name:
-        description: Pass cop name if you want to pick a specific cop.
-        required: false
-        type: string
-      ignore:
-        description: Check this with cop_name if you want to ignore a specific cop.
-        required: false
-        type: boolean
+
 jobs:
   run:
     runs-on: ubuntu-latest
     steps:
       - uses: r7kamura/rubocop-todo-corrector@v0
-        with:
-          ignore: ${{ inputs.ignore }}
 ```
 
 Now you can run it via actions page:
@@ -156,3 +146,41 @@ If you use GitHub App to generate access tokens, the permission would look like 
 
 - Pass `"false"` if you want it to include unsafe autocorrection.
 - optional
+
+## Example
+
+The below example is how we use this in our company:
+
+```yaml
+on:
+  pull_request:
+    types:
+      - closed
+  workflow_dispatch:
+    inputs:
+      cop_name:
+        description: Pass cop name if you want to pick a specific cop.
+        required: false
+        type: string
+      ignore:
+        description: Check this with cop_name if you want to ignore a specific cop.
+        required: false
+        type: boolean
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: tibdex/github-app-token@v1
+        with:
+          app_id: ${{ secrets.OUR_GITUB_APP_ID }}
+          private_key: ${{ secrets.OUR_GITUB_APP_PRIVATE_KEY }}
+        id: github_app_token
+      - uses: r7kamura/rubocop-todo-corrector@v0
+        with:
+          cop_name: ${{ inputs.cop_name }}
+          gh_pr_create_options: "--reviewer our-org/rubocop-reviewers"
+          github_token: ${{ steps.github_app_token.outputs.token }}
+          ignore: ${{ inputs.ignore }}
+          label: rubocop-todo-corrector
+```
