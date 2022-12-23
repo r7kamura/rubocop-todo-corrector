@@ -71,7 +71,7 @@ runs:
             exit 1
           fi
           rubocop_todo_corrector ignore --cop-name "${{ inputs.cop_name }}"
-          description="Ignore ${{ inputs.cop_name }} from rubocop-todo-corrector"
+          description='Ignore `${{ inputs.cop_name }}` from rubocop-todo-corrector'
         else
           rubocop_todo_corrector bundle
           if [ -n "${{ inputs.cop_name }}" ]; then
