@@ -147,7 +147,7 @@ If you use GitHub App to generate access tokens, the permission would look like 
 - Pass `"false"` if you want it to include unsafe autocorrection.
 - optional
 
-### `working-directory`
+### `working_directory`
 
 - Specify working directory.
 - optional
