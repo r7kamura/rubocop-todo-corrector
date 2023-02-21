@@ -32,6 +32,10 @@ inputs:
     description: Exclude unsafe cops.
     required: false
     default: "true"
+  working_directory:
+    description: Working directory.
+    required: false
+    default: "."
 runs:
   using: composite
   steps:
@@ -107,6 +111,7 @@ runs:
       env:
         GITHUB_TOKEN: ${{ inputs.github_token || github.token }}
       shell: bash
+      working-directory: ${{ inputs.working_directory }}
 branding:
   color: red
   icon: git-pull-request
