@@ -2,7 +2,7 @@ name: rubocop-todo-corrector
 description: Auto-correct RuboCop ToDo offenses and create pull request.
 inputs:
   auto_merge:
-    descriotion: Pass `"true"` if you want it to run `gh pr merge --auto --merge` after creating a pull request.
+    description: Pass `"true"` if you want it to run `gh pr merge --auto --merge` after creating a pull request.
     required: false
     default: "false"
   cop_name:
@@ -10,7 +10,7 @@ inputs:
     required: false
     default: ""
   gh_pr_create_options:
-    desecription: Additional options for `gh pr create` command.
+    description: Additional options for `gh pr create` command.
     required: false
     default: ""
   github_token:
