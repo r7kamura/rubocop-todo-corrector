@@ -179,8 +179,8 @@ jobs:
     steps:
       - uses: tibdex/github-app-token@v1
         with:
-          app_id: ${{ secrets.OUR_GITUB_APP_ID }}
-          private_key: ${{ secrets.OUR_GITUB_APP_PRIVATE_KEY }}
+          app_id: ${{ secrets.OUR_GITHUB_APP_ID }}
+          private_key: ${{ secrets.OUR_GITHUB_APP_PRIVATE_KEY }}
         id: github_app_token
       - uses: r7kamura/rubocop-todo-corrector@v0
         with:
