@@ -177,16 +177,16 @@ jobs:
   run:
     runs-on: ubuntu-latest
     steps:
-      - uses: tibdex/github-app-token@v1
+      - uses: actions/create-github-app-token@v1
+        id: app-token
         with:
-          app_id: ${{ secrets.OUR_GITHUB_APP_ID }}
-          private_key: ${{ secrets.OUR_GITHUB_APP_PRIVATE_KEY }}
-        id: github_app_token
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.PRIVATE_KEY }}
       - uses: r7kamura/rubocop-todo-corrector@v0
         with:
           cop_name: ${{ inputs.cop_name }}
           gh_pr_create_options: "--reviewer our-org/rubocop-reviewers"
-          github_token: ${{ steps.github_app_token.outputs.token }}
+          github_token: ${{ steps.app-token.outputs.token }}
           ignore: ${{ inputs.ignore }}
           label: rubocop-todo-corrector
 ```
