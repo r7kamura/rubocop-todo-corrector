@@ -45,8 +45,7 @@ runs:
         ruby-version: 3.1
     - uses: actions/checkout@v4
       with:
-        # We want to always get the default branch ref.
-        ref: "${{ github.event.pull_request.base.ref }}"
+        ref: "${{ github.event.pull_request.base.ref }}" # We want to always get the default branch ref.
     - name: Create pull request
       run: |
         if [ "${{ github.event_name }}" == "pull_request" ] && [ "${{ github.event.action }}" == "closed" ]; then
