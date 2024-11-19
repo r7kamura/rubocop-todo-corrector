@@ -46,6 +46,7 @@ runs:
     - uses: actions/checkout@v4
       with:
         ref: "${{ github.event.pull_request.base.ref }}" # We want to always get the default branch ref.
+        token: ${{ inputs.github_token || github.token }}
     - name: Create pull request
       run: |
         if [ "${{ github.event_name }}" == "pull_request" ] && [ "${{ github.event.action }}" == "closed" ]; then
