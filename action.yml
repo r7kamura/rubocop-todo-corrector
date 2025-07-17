@@ -67,7 +67,7 @@ runs:
           fi
         fi
 
-        gem install --no-document rubocop_todo_corrector -v 0.17.0
+        gem install --no-document rubocop_todo_corrector -v 0.18.0
 
         if [ "${{ inputs.ignore }}" == "true" ]; then
           if [ -z "${{ inputs.cop_name }}" ]; then
@@ -85,12 +85,8 @@ runs:
           else
             cop_name=$(rubocop_todo_corrector pick --mode="${{ inputs.mode }}" ${{ inputs.only_safe != 'true' && '--no-only-safe' || '' }})
           fi
-          echo 'Running: rubocop_todo_corrector remove'
-          rubocop_todo_corrector remove --cop-name="${cop_name}"
-          echo 'Running: rubocop_todo_corrector correct'
-          rubocop_todo_corrector correct ${{ inputs.only_safe != 'true' && '--no-only-safe' || '' }}
-          echo 'Running: rubocop_todo_corrector generate'
-          rubocop_todo_corrector generate
+          echo 'Running: rubocop_todo_corrector apply'
+          rubocop_todo_corrector apply --cop-name="${cop_name}" ${{ inputs.only_safe != 'true' && '--no-only-safe' || '' }}
           description=$(rubocop_todo_corrector describe --cop-name="${cop_name}")
           echo 'Running: rubocop_todo_corrector clean'
           rubocop_todo_corrector clean
