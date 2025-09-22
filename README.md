@@ -190,3 +190,9 @@ jobs:
           ignore: ${{ inputs.ignore }}
           label: rubocop-todo-corrector
 ```
+
+## Pro tip
+
+It’s recommended to add the `--auto-gen-only-exclude --no-exclude-limit` option when generating `.rubocop_todo.yml`.
+
+This ensures that the `Exclude` property is always present, allowing `rubocop-todo-corrector` to run autocorrection only on specific files rather than the entire project. As a result, execution time is reduced and the likelihood of issues is minimized.
