@@ -67,7 +67,7 @@ runs:
           fi
         fi
 
-        gem install --no-document rubocop_todo_corrector -v 0.18.2
+        gem install --no-document rubocop_todo_corrector -v 0.18.3
 
         if [ "${{ inputs.ignore }}" == "true" ]; then
           if [ -z "${{ inputs.cop_name }}" ]; then
