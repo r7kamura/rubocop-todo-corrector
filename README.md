@@ -17,7 +17,7 @@ jobs:
   run:
     runs-on: ubuntu-latest
     steps:
-      - uses: r7kamura/rubocop-todo-corrector@v0
+      - uses: r7kamura/rubocop-todo-corrector@v1
 ```
 
 Now you can run it via actions page:
