@@ -42,7 +42,7 @@ runs:
     - uses: ruby/setup-ruby@v1
       with:
         bundler-cache: true
-        ruby-version: 3.1
+        ruby-version: ruby
     - uses: actions/checkout@v4
       with:
         ref: "${{ github.event.pull_request.base.ref }}" # We want to always get the default branch ref.
@@ -67,7 +67,7 @@ runs:
           fi
         fi
 
-        gem install --no-document rubocop_todo_corrector -v 0.18.3
+        gem install --no-document rubocop_todo_corrector -v 0.19.0
 
         if [ "${{ inputs.ignore }}" == "true" ]; then
           if [ -z "${{ inputs.cop_name }}" ]; then
